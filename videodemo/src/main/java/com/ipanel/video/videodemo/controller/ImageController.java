@@ -8,6 +8,7 @@ import com.ipanel.video.videodemo.service.ImageService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,7 +23,12 @@ public class ImageController {
     public ImageController(ImageService imageService){
         this.imageService = imageService;
     }
-
+//
+//    @RequestMapping(value = {"index","/"},method = RequestMethod.GET)
+//    public String toIndex(Model model){
+//        model.addAttribute("showImg",new ShowImg());
+//        return "index";
+//    }
     @ApiOperation(value = "根据视频Id查询海报信息")
     @ApiImplicitParam(name = "videoId", value = "视频Id", required = true, dataType = "int", paramType = "path")
     @RequestMapping(value = "/images/{videoId}",method = RequestMethod.GET)
@@ -37,7 +43,7 @@ public class ImageController {
     }
 
     @ApiOperation(value = "展示指定规格、尺寸的海报图片")
-    @RequestMapping(value = "showImage",method = RequestMethod.GET)
+    @RequestMapping(value = "showImage",method = RequestMethod.POST)
     public String showImage(@ModelAttribute ShowImg showImg)throws Exception {
         return imageService.showImgBySize(showImg);
     }
