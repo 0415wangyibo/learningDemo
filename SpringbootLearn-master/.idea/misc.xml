@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/file-upload/pom.xml" />
+        <option value="$PROJECT_DIR$/security-oauth2/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-first-application/pom.xml" />
+        <option value="$PROJECT_DIR$/mail/pom.xml" />
+        <option value="$PROJECT_DIR$/elk/pom.xml" />
+        <option value="$PROJECT_DIR$/websocket-rabbitmq/pom.xml" />
+        <option value="$PROJECT_DIR$/shiro-jwt/pom.xml" />
+        <option value="$PROJECT_DIR$/mystarter-spring-boot-starter/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

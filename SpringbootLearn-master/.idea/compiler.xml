@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="elk" />
+        <module name="file-upload" />
+        <module name="mail" />
+        <module name="mystarter-spring-boot-starter" />
+        <module name="security-oauth2" />
+        <module name="shiro-jwt" />
+        <module name="springboot-first-application" />
+        <module name="SpringbootLearn" />
+        <module name="websocket-rabbitmq" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="elk" target="1.8" />
+      <module name="file-upload" target="1.8" />
+      <module name="mail" target="1.8" />
+      <module name="my-starter" target="1.8" />
+      <module name="mystarter-spring-boot-starter" target="1.8" />
+      <module name="security-oauth2" target="1.8" />
+      <module name="shiro-jwt" target="1.8" />
+      <module name="springboot-first-application" target="1.8" />
+      <module name="SpringbootLearn" target="1.5" />
+      <module name="websocket-rabbitmq" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
