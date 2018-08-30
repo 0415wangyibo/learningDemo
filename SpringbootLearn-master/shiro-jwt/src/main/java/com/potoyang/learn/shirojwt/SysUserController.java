@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created with Intellij IDEA.
- *
+ * shiro权限管理
  * @author potoyang
  * Create: 2018/8/15 14:03
  * Modified By:

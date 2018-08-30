@@ -13,9 +13,11 @@
         <module name="mystarter-spring-boot-starter" />
         <module name="security-oauth2" />
         <module name="shiro-jwt" />
+        <module name="shirojwt" />
         <module name="springboot-first-application" />
         <module name="SpringbootLearn" />
         <module name="websocket-rabbitmq" />
+        <module name="websocketrabbitmq" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -26,9 +28,11 @@
       <module name="mystarter-spring-boot-starter" target="1.8" />
       <module name="security-oauth2" target="1.8" />
       <module name="shiro-jwt" target="1.8" />
+      <module name="shirojwt" target="1.8" />
       <module name="springboot-first-application" target="1.8" />
       <module name="SpringbootLearn" target="1.5" />
       <module name="websocket-rabbitmq" target="1.8" />
+      <module name="websocketrabbitmq" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

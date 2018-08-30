@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 /**
  * Created with Intellij IDEA.
- *
+ * 查找字符串
  * @author potoyang
  * Create: 2018/7/30 10:57
  * Modified By:
@@ -110,11 +110,11 @@ public class AllSortMethods {
         String str = "asdasdasf";
         str.contains("asd");
         for (int anArr : arr) {
-            System.out.print(anArr + "  ");
+            System.out.println(anArr + "  ");
         }
 
 
-        String source = "abchhabchabchabchcaaaabceabddh";
+        String source = "abchhabchabceahabchcaaaabceabddh";
         String target = "abceab";
         System.out.println("匹配成功，下标为：" + kmpSearch(source, target));
     }

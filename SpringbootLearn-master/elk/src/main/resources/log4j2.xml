@@ -5,7 +5,7 @@
         <Property name="logdir">F:/tmp/</Property>
     </Properties>
     <Appenders>
-        <Socket name="Logstash" host="127.0.0.1" port="4560" protocol="TCP">
+        <Socket name="Logstash" host="127.0.0.1" port="5672" protocol="TCP">
             <PatternLayout>%d{HH:mm:ss,SSS} %-5level [%c{1.}] %C{1} %m%n</PatternLayout>
         </Socket>
 

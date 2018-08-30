@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created with Intellij IDEA.
- *
+ * 网页聊天demo
  * @author potoyang
  * Create: 2018/8/9 12:16
  * Modified By:
