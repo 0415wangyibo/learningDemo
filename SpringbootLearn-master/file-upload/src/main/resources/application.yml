@@ -11,7 +11,7 @@ spring:
       max-request-size: 10000Mb
   datasource:
     name: test
-    url: jdbc:mysql://127.0.0.1:3309/test
+    url: jdbc:mysql://127.0.0.1:3306/test
     username: root
     password: root
     type: com.alibaba.druid.pool.DruidDataSource
@@ -39,5 +39,5 @@ mybatis:
   mapper-locations: classpath:mapping/*.xml
   type-aliases-package: com.potoyang.learn.fileupload.entity
 upload:
-  dir: D:/data/uploads/
+  dir: D:/uploads/
   chunkSize: 5242880

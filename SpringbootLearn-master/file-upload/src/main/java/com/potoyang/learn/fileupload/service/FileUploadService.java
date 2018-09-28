@@ -1,5 +1,6 @@
 package com.potoyang.learn.fileupload.service;
 
+import com.potoyang.learn.fileupload.config.BoMerge;
 import com.potoyang.learn.fileupload.config.MultipartFileParam;
 import com.potoyang.learn.fileupload.entity.ExcelInfo;
 import com.potoyang.learn.fileupload.entity.FileCheckEntity;
@@ -76,4 +77,6 @@ public interface FileUploadService {
      * @return
      */
     List<ExcelInfo> getExcelInfo(MultipartFile file, String format) throws Exception;
+
+    void mergeVideo(BoMerge boMerge);
 }

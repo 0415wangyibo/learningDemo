@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Created with Intellij IDEA.
- * 可以将日志进行打印到指定路径中
+ *
  * @author potoyang
  * Create: 2018/7/27 16:26
  * Modified By:

@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="test@localhost" uuid="4e053f5d-70f5-4315-a422-1f82985c9565">
+    <data-source name="test@localhost" uuid="8db102e4-5b1a-4488-ba1b-5d411f78e9d4">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+      <introspection-schemas>*:test</introspection-schemas>
+    </data-source>
+    <data-source name="novel" uuid="a8cfde6d-a01b-4b95-b02d-34ccee79c531">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+      <introspection-schemas>*:my_novel</introspection-schemas>
+    </data-source>
+    <data-source name="192.168.36.184" uuid="0d550b4b-b78e-47a5-b9b6-2ee4c33e4b1d">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+      <introspection-schemas>*:delivery_center</introspection-schemas>
+    </data-source>
+    <data-source name="delivery_center@localhost" uuid="0a30fb8f-4369-4d5b-92a7-c4d8bd449248">
       <database-info product="MySQL" version="5.5.59" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.45 ( Revision: 9131eefa398531c7dc98776e8a3fe839e544c5b2 )">
         <extra-name-characters>#@</extra-name-characters>
         <identifier-quote-string>`</identifier-quote-string>
@@ -9,7 +21,7 @@
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower" />
       <secret-storage>master_key</secret-storage>
       <user-name>root</user-name>
-      <introspection-schemas>*:test</introspection-schemas>
+      <introspection-schemas>*:delivery_center</introspection-schemas>
     </data-source>
   </component>
 </project>

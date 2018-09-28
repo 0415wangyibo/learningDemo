@@ -1,5 +1,6 @@
 package com.potoyang.learn.fileupload.service.impl;
 
+import com.potoyang.learn.fileupload.config.BoMerge;
 import com.potoyang.learn.fileupload.config.Constants;
 import com.potoyang.learn.fileupload.config.MultipartFileParam;
 import com.potoyang.learn.fileupload.entity.ExcelInfo;
@@ -122,7 +123,8 @@ public class FileUploadServiceImpl implements FileUploadService {
 
     @Override
     public void uploadFileByMappedByteBuffer(MultipartFileParam param) throws IOException {
-        String fileName = param.getName();
+//        String fileName = param.getName();
+        System.out.println(param);
         String uploadDirPath = finalDirPath + param.getMd5();
         String tempFileName = String.valueOf(param.getChunk());
         File tmpDir = new File(uploadDirPath);
@@ -143,7 +145,8 @@ public class FileUploadServiceImpl implements FileUploadService {
         FileMD5Util.freedMappedByteBuffer(mappedByteBuffer);
         fileChannel.close();
 
-        merge(param, uploadDirPath, fileName);
+//        merge(param, uploadDirPath, fileName);
+        checkAndSetUploadProgress(param, uploadDirPath);
     }
 
     @Async
@@ -172,6 +175,45 @@ public class FileUploadServiceImpl implements FileUploadService {
         }
     }
 
+    @Override
+    @Async
+    public void mergeVideo(BoMerge merge) {
+//        String url = request.getRequestURL().toString();
+//        boolean isOk = checkAndSetUploadProgress(param, uploadDirPath);
+        try {
+            // 全部传输完成后合并全部分片文件
+            logger.info("begin to merge");
+
+            String fileName = merge.getName();
+            String uploadDirPath = finalDirPath + merge.getMd5();
+
+            String oF = uploadDirPath + "/" + fileName;
+            FileOutputStream output = new FileOutputStream(new File(oF));
+            WritableByteChannel targetChannel = output.getChannel();
+            int i = 0;
+            do {
+                FileInputStream input = new FileInputStream(uploadDirPath + "/" + i);
+                FileChannel inputChannel = input.getChannel();
+                inputChannel.transferTo(0, inputChannel.size(), targetChannel);
+                inputChannel.close();
+                input.close();
+                new File(uploadDirPath + "/" + i).delete();
+                i++;
+            } while (i < merge.getChunks());
+            targetChannel.close();
+            output.close();
+            logger.info("all jobs done...");
+            logger.info("upload complete !!" + true + " name=" + merge.getName());
+//            return new AsyncResult<>("complete");
+//            return "complete";
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+//            return e.getMessage();
+//            return new AsyncResult<>(e.getMessage());
+        }
+    }
+
     /**
      * 检查并修改文件上传进度
      *
@@ -181,7 +223,7 @@ public class FileUploadServiceImpl implements FileUploadService {
      * @throws IOException
      */
     private boolean checkAndSetUploadProgress(MultipartFileParam param, String uploadDirPath) throws IOException {
-        String fileName = param.getName();
+        String fileName = param.getFile().getOriginalFilename();
         File confFile = new File(uploadDirPath, fileName + ".conf");
         RandomAccessFile accessConfFile = new RandomAccessFile(confFile, "rw");
         // 把该分段标记为 true 表示完成
@@ -199,8 +241,8 @@ public class FileUploadServiceImpl implements FileUploadService {
 //            logger.info("check part " + i + " complete?:" + completeList[i]);
         }
         logger.info("check complete");
-
         accessConfFile.close();
+
         // 将记录已经传递的片，存在redis里面
         if (isComplete == Byte.MAX_VALUE) {
             stringRedisTemplate.opsForHash().put(Constants.FILE_UPLOAD_STATUS, param.getMd5(), "true");

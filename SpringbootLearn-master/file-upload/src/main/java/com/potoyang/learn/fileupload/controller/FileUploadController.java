@@ -3,6 +3,7 @@ package com.potoyang.learn.fileupload.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.potoyang.learn.fileupload.config.BoMerge;
 import com.potoyang.learn.fileupload.config.Constants;
 import com.potoyang.learn.fileupload.config.MultipartFileParam;
 import com.potoyang.learn.fileupload.controller.response.ResultStatus;
@@ -18,10 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +32,7 @@ import java.util.List;
 
 /**
  * Created with Intellij IDEA.
- * 大文件上传demo，实现暂停上传
+ *
  * @author potoyang
  * Create: 2018/7/12 15:24
  * Modified By:
@@ -227,11 +225,6 @@ public class FileUploadController {
         if (isMultipart) {
             logger.info("上传文件start");
             try {
-                // 方法1
-                //storageService.uploadFileRandomAccessFile(param);
-                // 方法2 这个更快点
-                System.out.println(param.toString());
-//                LOG.info(" *** editImageRemark enter id:{},title={},remark={}", id, title, remark);
                 fileUploadService.uploadFileByMappedByteBuffer(param);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -240,6 +233,28 @@ public class FileUploadController {
             logger.info("上传文件end");
         }
         return new ResultVO<>(ResultStatus.SUCCESS, "上传成功");
+    }
+
+    @ApiOperation("合并视频文件")
+    @PostMapping("/merge")
+    public Object merge(@RequestBody BoMerge boMerge, HttpServletRequest request) {
+        logger.info(boMerge.toString());
+//        try {
+//            Future<String> future = fileUploadService.mergeVideo(boMerge, request);
+//            while (true) {
+//                if (future.isDone()) {
+//                    break;
+//                }
+//            }
+//        } catch (Exception e) {
+//            return new ResultVO<>(ResultStatus.FAILED, e.getMessage());
+//        }
+        fileUploadService.mergeVideo(boMerge);
+        return new ResultVO<>(ResultStatus.SUCCESS, "complete");
+//        while(fileUploadService.mergeVideo(boMerge, request).isDone()){
+//            return new ResultVO<>(ResultStatus.SUCCESS, "complete");
+//        }
+//        return new ResultVO<>(ResultStatus.SUCCESS, fileUploadService.mergeVideo(boMerge, request));
     }
 
     private List<FileCheckEntity> arrayToList(String arrayStr) {
@@ -264,5 +279,12 @@ public class FileUploadController {
         } else {
             return fileName.endsWith(XLS) ? XLS : XLSX;
         }
+    }
+
+    @ApiOperation("Test")
+    @RequestMapping(value = "test", method = RequestMethod.POST)
+    public String test(ExcelInfo info) {
+        System.out.println(info.getPath());
+        return "123";
     }
 }

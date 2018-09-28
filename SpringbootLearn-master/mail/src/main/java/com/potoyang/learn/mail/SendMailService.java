@@ -14,7 +14,7 @@ import java.io.File;
 
 /**
  * Created with Intellij IDEA.
- * 使用qq邮箱发送邮件
+ *
  * @author potoyang
  * Create: 2018/7/25 16:11
  * Modified By:

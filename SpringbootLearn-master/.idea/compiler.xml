@@ -9,30 +9,33 @@
         <outputRelativeToContentRoot value="true" />
         <module name="elk" />
         <module name="file-upload" />
+        <module name="get-some-novel" />
         <module name="mail" />
         <module name="mystarter-spring-boot-starter" />
+        <module name="security-jwt" />
         <module name="security-oauth2" />
+        <module name="shiro" />
         <module name="shiro-jwt" />
-        <module name="shirojwt" />
         <module name="springboot-first-application" />
         <module name="SpringbootLearn" />
         <module name="websocket-rabbitmq" />
-        <module name="websocketrabbitmq" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="elk" target="1.8" />
       <module name="file-upload" target="1.8" />
+      <module name="get-some-novel" target="1.8" />
       <module name="mail" target="1.8" />
       <module name="my-starter" target="1.8" />
       <module name="mystarter-spring-boot-starter" target="1.8" />
+      <module name="security-jwt" target="1.8" />
       <module name="security-oauth2" target="1.8" />
+      <module name="shiro" target="1.8" />
       <module name="shiro-jwt" target="1.8" />
-      <module name="shirojwt" target="1.8" />
       <module name="springboot-first-application" target="1.8" />
       <module name="SpringbootLearn" target="1.5" />
+      <module name="swagger-test" target="1.8" />
       <module name="websocket-rabbitmq" target="1.8" />
-      <module name="websocketrabbitmq" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
