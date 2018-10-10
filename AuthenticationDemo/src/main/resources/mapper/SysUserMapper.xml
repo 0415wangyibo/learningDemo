@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--by wangyb-->
+<mapper namespace="com.wangyb.learningdemo.authentication.mapper.SysUserMapper">
+
+    <resultMap id="BaseResultMap" type="SysUser">
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <result column="user_name" property="userName"/>
+        <result column="login_name" property="loginName"/>
+        <result column="user_password" property="userPassword"/>
+        <result column="email" property="email"/>
+        <result column="enabled" property="enabled"/>
+        <result column="organization_id" property="organizationId"/>
+        <result column="token_version" property="tokenVersion"/>
+    </resultMap>
+
+    <select id="selectByLoginName" resultType="com.wangyb.learningdemo.authentication.entity.SysUser">
+        SELECT *
+        FROM sys_user
+        WHERE login_name = #{loginName, jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectUserVOByOrganizationId" resultType="com.wangyb.learningdemo.authentication.controller.response.SysUserVO">
+        SELECT
+        id          AS userId,
+        user_name   AS userName,
+        login_name  AS loginName,
+        email       AS email,
+        enabled     AS enabled,
+        organization_id AS organizationId,
+        create_time AS createTime,
+        modify_time AS modifyTime
+        FROM sys_user
+        WHERE organization_id = #{organizationId, jdbcType=INTEGER}
+    </select>
+
+    <update id="updateUserModifyTimeByOrganizationId" parameterType="com.wangyb.learningdemo.authentication.entity.SysUser">
+        update sys_user
+        <set>
+            modify_time = #{modify,jdbcType=TIMESTAMP}
+        </set>
+        where organization_id = #{organizationId, jdbcType=INTEGER}
+    </update>
+
+    <update id="setUserEnabledByOrganizationId" parameterType="com.wangyb.learningdemo.authentication.entity.SysUser">
+        update sys_user
+        <set>
+            enabled = #{enabled,jdbcType=INTEGER}
+        </set>
+        where organization_id = #{organizationId,jdbcType=INTEGER}
+    </update>
+
+    <select id="countUserByOrganizationId" resultType="Integer">
+        SELECT count(*)
+        FROM sys_user
+        WHERE organization_id = #{organizationId, jdbcType=INTEGER}
+    </select>
+
+    <select id="selectUserById" resultType="com.wangyb.learningdemo.authentication.entity.SysUser">
+        SELECT *
+        FROM sys_user
+        WHERE id = #{userId, jdbcType=INTEGER}
+    </select>
+
+</mapper>

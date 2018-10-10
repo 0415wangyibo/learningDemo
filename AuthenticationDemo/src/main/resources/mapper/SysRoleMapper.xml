@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--by wangyb-->
+<mapper namespace="com.wangyb.learningdemo.authentication.mapper.SysRoleMapper">
+
+    <resultMap id="BaseResultMap" type="SysRole">
+        <id column="id" property="id"/>
+        <result column="role_name" property="roleName"/>
+        <result column="memo" property="memo"/>
+        <result column="organization_id" property="organizationId"/>
+        <result column="user_id" property="userId"/>
+    </resultMap>
+
+    <select id="selectRoleByOrganizationId" resultType="com.wangyb.learningdemo.authentication.entity.SysRole">
+        SELECT *
+        FROM sys_role
+        WHERE organization_id = #{organizationId, jdbcType=INTEGER}
+        AND user_id != 0
+    </select>
+
+    <select id="selectRoleById" resultType="com.wangyb.learningdemo.authentication.entity.SysRole">
+        SELECT *
+        FROM sys_role
+        WHERE id = #{id, jdbcType=INTEGER}
+    </select>
+
+    <select id="selectRoleByRoleNameAndOrganizationId" resultType="com.wangyb.learningdemo.authentication.entity.SysRole">
+        SELECT *
+        FROM sys_role
+        WHERE organization_id = #{organizationId, jdbcType=INTEGER}
+        AND role_name = #{roleName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectRoleNameByUserId" resultType="String">
+        SELECT r.role_name
+        FROM sys_user u, sys_user_role ur, sys_role r
+        WHERE r.id = ur.role_id
+        AND u.id = ur.user_id
+        AND u.id = #{userId, jdbcType=INTEGER}
+    </select>
+
+    <select id="selectRoleByUserId" resultType="com.wangyb.learningdemo.authentication.entity.SysRole">
+        SELECT r.*
+        FROM sys_user u, sys_user_role ur, sys_role r
+        WHERE r.id = ur.role_id
+        AND u.id = ur.user_id
+        AND u.id = #{userId, jdbcType=INTEGER}
+    </select>
+
+    <select id="selectRoleNameAndIdByOrganizationId" resultType="com.wangyb.learningdemo.authentication.controller.response.NameAndIdVO">
+        SELECT id AS nameId,
+        role_name AS name
+        FROM sys_role
+        WHERE organization_id = #{organizationId, jdbcType=INTEGER}
+        AND user_id != 0
+    </select>
+</mapper>

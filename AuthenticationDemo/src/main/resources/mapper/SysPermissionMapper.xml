@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--by wangyb-->
+<mapper namespace="com.wangyb.learningdemo.authentication.mapper.SysPermissionMapper">
+
+    <resultMap id="BaseResultMap" type="SysPermission">
+        <id column="id" property="id"/>
+        <result column="permission_name" property="permissionName"/>
+        <result column="permission_url" property="permissionUrl"/>
+        <result column="parent_id" property="parentId"/>
+    </resultMap>
+
+    <select id="selectPermissionVOByParentIds" resultType="com.wangyb.learningdemo.authentication.controller.response.PermissionVO">
+        SELECT
+        id AS permissionId,
+        permission_name AS permissionName
+        FROM sys_permission
+        WHERE parent_id IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        Group By id
+    </select>
+
+    <select id="selectMainPermissionByRoleId" resultType="com.wangyb.learningdemo.authentication.controller.response.PermissionVO">
+        SELECT
+        p.id              AS permissionId,
+        p.permission_name AS permissionName
+        FROM sys_role r, sys_role_permission rp, sys_permission p, sys_permission p1
+        WHERE (r.id = #{roleId, jdbcType=INTEGER}
+        AND r.id = rp.role_id
+        AND rp.permission_id = p.id
+        AND p.parent_id = 0)
+        OR (r.id = #{roleId, jdbcType=INTEGER}
+        AND r.id = rp.role_id
+        AND rp.permission_id = p1.id
+        AND p1.parent_id = p.id)
+        GROUP BY p.id
+    </select>
+
+    <select id="selectPermissionByRoleId" resultType="com.wangyb.learningdemo.authentication.controller.response.PermissionVO">
+        SELECT
+        p.id              AS permissionId,
+        p.permission_name AS permissionName
+        FROM sys_role r, sys_role_permission rp, sys_permission p
+        WHERE r.id = #{roleId, jdbcType=INTEGER}
+        AND r.id = rp.role_id
+        AND rp.permission_id = p.id
+        GROUP BY p.id
+    </select>
+
+    <select id="selectPermissionVOByUserId" resultType="com.wangyb.learningdemo.authentication.controller.response.PermissionVO">
+        SELECT
+        p.id              AS permissionId,
+        p.permission_name AS permissionName
+        FROM sys_permission p, sys_role_permission rp, sys_user_role ur
+        WHERE ur.user_id = #{userId,jdbcType=INTEGER} AND rp.role_id = ur.role_id
+        AND p.id = rp.permission_id
+        GROUP BY p.id
+    </select>
+</mapper>
