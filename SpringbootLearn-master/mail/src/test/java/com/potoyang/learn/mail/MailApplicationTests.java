@@ -23,8 +23,7 @@ public class MailApplicationTests {
         String subject = "Springboot Mail Test [Text]";
         String text = "测试Springboot使用QQ邮箱发邮件";
         String sender = "715792648@qq.com";
-        String receiver1 = "potoyang@163.com";
-        String receiver2 = "yangycy@ipanel.cn";
-        sendMailService.sendTextMail(subject, text, sender, receiver1, receiver2);
+        String receiver= "wangyb@ipanel.cn";
+        sendMailService.sendTextMail(subject, text, sender, receiver);
     }
 }
