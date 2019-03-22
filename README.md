@@ -1,3 +1,2 @@
 # learningDemo
-my code demo
-用来记录学习的demo
+主要用来记录springboot相关学习过程
