@@ -1,0 +1,12 @@
+server:
+  port: 8055
+config:
+  history:
+    number: 7
+  httpclient:
+    conn-max-total: 20
+    max-per-route: 10
+    conn-timeout: 2000
+    conn-request-timeout: 500
+    socket-timeout: 5000
+    retry-time: 2
