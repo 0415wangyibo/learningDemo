@@ -18,3 +18,5 @@ SpringbootLearn-master为yangyc的学习demo，用来借鉴学习，其中含有
 quartz为动态定时任务demo，可以动态添加、修改、删除定时任务，其中还含有其他一部分demo
 
 videodemo为图片处理demo
+
+xmldemo为以xml为数据交互形式的学习demo
