@@ -18,6 +18,7 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +28,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -41,6 +41,7 @@ import java.util.List;
 @Api(tags = "视频上传接口")
 @RequestMapping(value = "/upload")
 @RestController
+@CrossOrigin
 public class FileUploadController {
     private Logger logger = LoggerFactory.getLogger(FileUploadController.class);
 
@@ -48,6 +49,9 @@ public class FileUploadController {
      * redis缓存,存储分片文件的传输信息
      */
     private final StringRedisTemplate stringRedisTemplate;
+
+    private final RedisTemplate redisTemplate;
+
     private final FileUploadService fileUploadService;
 
     /**
@@ -57,8 +61,9 @@ public class FileUploadController {
     private static final String XLS = "xls", XLSX = "xlsx";
 
     @Autowired
-    public FileUploadController(StringRedisTemplate stringRedisTemplate, FileUploadService fileUploadService) {
+    public FileUploadController(StringRedisTemplate stringRedisTemplate, RedisTemplate redisTemplate, FileUploadService fileUploadService) {
         this.stringRedisTemplate = stringRedisTemplate;
+        this.redisTemplate = redisTemplate;
         this.fileUploadService = fileUploadService;
     }
 
@@ -197,13 +202,15 @@ public class FileUploadController {
         } else {
             File confFile = new File(value);
             byte[] completeList = FileUtils.readFileToByteArray(confFile);
-            List<String> missChunkList = new LinkedList<>();
+            List<String> missChunkList = new ArrayList<>();
             for (int i = 0; i < completeList.length; i++) {
                 if (completeList[i] != Byte.MAX_VALUE) {
                     missChunkList.add(i + "");
                 }
             }
-            return new ResultVO<>(ResultStatus.ING, missChunkList);
+            System.out.println(missChunkList.get(0));
+//            missChunkList.forEach(System.out::print);
+            return new ResultVO<>(ResultStatus.ING, missChunkList.get(0));
         }
     }
 
@@ -283,8 +290,9 @@ public class FileUploadController {
 
     @ApiOperation("Test")
     @RequestMapping(value = "test", method = RequestMethod.POST)
-    public String test(ExcelInfo info) {
-        System.out.println(info.getPath());
+    public String test(@RequestBody List<String> infoList) {
+        infoList.forEach(System.out::println);
         return "123";
     }
+
 }
