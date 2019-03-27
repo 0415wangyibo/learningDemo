@@ -10,3 +10,7 @@ AuthenticationDemo为springboot+jwt+mybatis+shiro+ehcache+swagger+token版本控
 FileUploadDemo-master为文件上传demo，其中含有按实体类生成excel表格、图片裁剪等工具类
 
 AuthorizationDemo-master为Springboot+redis+jwt 实现授权验证的基本功能框架
+
+OAuthDemo为OAuth认证demo
+
+
