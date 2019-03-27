@@ -14,3 +14,5 @@ AuthorizationDemo-master为Springboot+redis+jwt 实现授权验证的基本功�
 OAuthDemo为OAuth认证demo
 
 SpringbootLearn-master为yangyc的学习demo，用来借鉴学习，其中含有大量学习demo
+
+quartz为动态定时任务demo，可以动态添加、修改、删除定时任务，其中还含有其他一部分demo
