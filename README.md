@@ -5,4 +5,4 @@ TestDemo为webSocket后台demo
 
 springboot_elasticsearch为elasticSearch学习demo
 
-AuthenticationDemo
+AuthenticationDemo为springboot+jwt+mybatis+shiro+ehcache+swagger+token版本控制实现权限管理demo
