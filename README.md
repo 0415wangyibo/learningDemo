@@ -6,3 +6,5 @@ TestDemo为webSocket后台demo
 springboot_elasticsearch为elasticSearch学习demo
 
 AuthenticationDemo为springboot+jwt+mybatis+shiro+ehcache+swagger+token版本控制实现权限管理demo
+
+FileUploadDemo-master为文件上传demo，其中含有按实体类生成excel表格、图片裁剪等工具类
