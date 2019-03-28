@@ -1,0 +1,35 @@
+spring:
+  mail:
+      #发送邮件的主机
+      host: smtp.ipanel.cn
+      #协议
+      protocol: smtp
+      port: 25
+      default-encoding: UTF-8
+      #用于发送邮件的邮箱用户名
+      username: wangyb
+      #邮箱密码
+      password:
+  thymeleaf:
+    cache: false
+    mode: HTML
+    encoding: UTF-8
+
+server:
+  port: 8056
+
+logging:
+  level:
+    cn.ipanel.fenghuangdownload: debug
+  file: download.log
+
+config:
+  #发送邮件的邮箱
+  email: wangyb@ipanel.cn
+  number: 7
+  conn-max-total: 20
+  max-per-route: 10
+  conn-timeout: 2000
+  conn-request-timeout: 500
+  socket-timeout: 5000
+  retry-time: 2

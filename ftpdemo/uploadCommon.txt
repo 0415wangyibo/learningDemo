@@ -1,0 +1,1 @@
+{"ftpHost":"192.168.21.29","ftpPort":21,"ftpUserName":"root","ftpPassword":"root","ftpPath":"/testUpload/","ifUpload":1}

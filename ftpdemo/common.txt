@@ -1,0 +1,1 @@
+{"ftpHost":"192.168.21.29","ftpPort":21,"ftpUserName":"root","ftpPassword":"root","ftpPath":"/upload/","destinationPath":"D:/testData/","emailName":"汪先生","receivers":"1426924646@qq.com","downDate":0,"ifListen":1}

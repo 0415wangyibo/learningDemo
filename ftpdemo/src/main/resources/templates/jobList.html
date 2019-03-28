@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>凤凰专区下载上传配置</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+    <script src="/js/jquery/jquery-2.1.4.min.js"></script>
+    <script src="/js/toastr/toastr.min.js"></script>
+    <link rel="stylesheet" href="/css/toastr/toastr.min.css">
+    <script src="/js/bootstrap/bootstrap.min.js"></script>
+    <style>
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+
+<div class="jumbotron text-center" style="margin-bottom:0">
+    <h1>自动实时下载上传ftp文件配置管理</h1>
+</div>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/download/config">下载配置</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/upload/config">上传配置</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/job/list">任务列表</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/download/admin">下载管理</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/upload/admin">上传管理</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div style="margin-top:30px">
+    <table class="table table-bordered table-responsive-sm">
+        <thead class="thead-dark">
+        <tr>
+            <th>序号</th>
+            <th>文件夹名</th>
+            <th>下载文件总大小</th>
+            <th>已下载大小</th>
+            <th>文件总个数</th>
+            <th>已下载个数</th>
+            <th>下载状态</th>
+            <th>正在下载文件</th>
+            <th>正在下载文件大小</th>
+            <th>上传文件总大小</th>
+            <th>已上传大小</th>
+            <th>文件总个数</th>
+            <th>已上传个数</th>
+            <th>上传状态</th>
+            <th>正在上传文件</th>
+            <th>正在上传文件大小</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="jobTable">
+
+        </tbody>
+    </table>
+</div>
+
+<div class="jumbotron text-center" style="margin-bottom:0">
+    <div id="foot">
+    </div>
+</div>
+
+<script src="/js/footer/footer.js"></script>
+<script src="/js/job/jobList.js"></script>
+</body>
+</html>

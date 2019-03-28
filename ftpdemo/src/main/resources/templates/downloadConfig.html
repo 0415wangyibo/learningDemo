@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>凤凰专区下载上传配置</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+    <script src="/js/jquery/jquery-2.1.4.min.js"></script>
+    <script src="/js/toastr/toastr.min.js"></script>
+    <link rel="stylesheet" href="/css/toastr/toastr.min.css">
+    <script src="/js/bootstrap/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="jumbotron text-center" style="margin-bottom:0">
+    <h1>自动实时下载上传ftp文件配置管理</h1>
+</div>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/download/config">下载配置</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/upload/config">上传配置</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/job/list">任务列表</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/download/admin">下载管理</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/upload/admin">上传管理</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container" style="margin-top:30px">
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="ftpHost" class="col-sm-3 control-label">ftp主机地址</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="ftpHost">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="ftpPort" class="col-sm-3 control-label">ftp主机端口</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="ftpPort">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="ftpUserName" class="col-sm-3 control-label">ftp登录名</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="ftpUserName">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="ftpPassword" class="col-sm-3 control-label">ftp登录密码</label>
+            <div class="col-sm-9">
+                <input type="password" class="form-control" id="ftpPassword">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="ftpPath" class="col-sm-3 control-label">ftp更新文件目录</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="ftpPath">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="destinationPath" class="col-sm-3 control-label">本地更新文件地址</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="destinationPath">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="emailName" class="col-sm-3 control-label">邮件称谓</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="emailName">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="receivers" class="col-sm-3 control-label">接收通知邮箱</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="receivers">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="downDate" class="col-sm-3 control-label">下载哪一天更新的文件</label>
+            <div class="col-sm-9">
+                <select id="downDate">
+                    <option value="1">不添加下载任务</option>
+                    <option value="0">下载当天的文件夹</option>
+                    <option value="-1">下载一天前的文件夹</option>
+                    <option value="-2">下载两天前的文件夹</option>
+                    <option value="-3">下载三天前的文件夹</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="ifListen" class="col-sm-3 control-label">发邮件给现场人员</label>
+            <div class="col-sm-9">
+                <select id="ifListen">
+                    <option value="1">是</option>
+                    <option value="0">否</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <button type="button" class="btn btn-default" onclick="postCommon()">保存配置信息</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="jumbotron text-center" style="margin-bottom:0">
+    <div id="foot">
+    </div>
+</div>
+
+<script src="/js/footer/footer.js"></script>
+
+<script>
+    var message;
+    $.get("/common", function (data, status) {
+        if (status == "success") {
+            message = data.data;
+            document.getElementById("ftpHost").value = message.ftpHost;
+            document.getElementById("ftpPort").value = message.ftpPort;
+            document.getElementById("ftpUserName").value = message.ftpUserName;
+            document.getElementById("ftpPassword").value = message.ftpPassword;
+            document.getElementById("ftpPath").value = message.ftpPath;
+            document.getElementById("destinationPath").value = message.destinationPath;
+            document.getElementById("emailName").value = message.emailName;
+            document.getElementById("receivers").value = message.receivers;
+            document.getElementById("downDate").value = message.downDate;
+            document.getElementById("ifListen").value = message.ifListen;
+        }else {
+            toastr.error("获取数据失败");
+        }
+    });
+
+    function postCommon() {
+        $.post("/common", {
+                ftpHost: document.getElementById("ftpHost").value,
+                ftpPort: parseInt(document.getElementById("ftpPort").value),
+                ftpUserName: document.getElementById("ftpUserName").value,
+                ftpPassword: document.getElementById("ftpPassword").value,
+                ftpPath: document.getElementById("ftpPath").value,
+                destinationPath: document.getElementById("destinationPath").value,
+                emailName: document.getElementById("emailName").value,
+                receivers: document.getElementById("receivers").value,
+                downDate: parseInt(document.getElementById("downDate").value),
+                ifListen: parseInt(document.getElementById("ifListen").value)
+            },
+            function (data, status) {
+                if (status == "success") {
+                    toastr.success("success");
+                } else {
+                    toastr.error("修改配置失败");
+                }
+            });
+    }
+</script>
+
+</body>
+</html>
