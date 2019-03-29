@@ -140,7 +140,7 @@ public class UploadTask {
                         if (ftpFile.getName().equals(fileName)) {
                             flag = 1;
                             //如果正在上传的文件和10分钟前的一样，大小也一样则说明上传任务被阻塞
-                            if (fileName.equals(uploadName) && ftpFile.getSize() == uploadNowSize) {
+                            if ((!uploadName.isEmpty()) &&fileName.equals(uploadName) && ftpFile.getSize() == uploadNowSize) {
                                 log.error("由于文件：" + fullPath + "阻塞进程，程序强行关闭ftp，重新上传");
                                 dayDownLoadInfo.setUploadNow(null);
                                 dayDownLoadInfo.setUploadNowSize(null);

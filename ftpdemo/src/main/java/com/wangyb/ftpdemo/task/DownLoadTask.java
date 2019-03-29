@@ -94,7 +94,7 @@ public class DownLoadTask {
                 Integer flag = 0;
                 //如果文件存在，并且下载大小不变，则说明下载中断
                 if (file.exists()) {
-                    if (dayDownLoadInfo.getDownloadNow().equals(downLoadName) && file.length() == downLoadNowSize) {
+                    if ((!downLoadName.isEmpty()) &&dayDownLoadInfo.getDownloadNow().equals(downLoadName) && file.length() == downLoadNowSize) {
                         log.info(downLoadName + "已经下载大小：" + file.length());
                         log.info("该文件阻塞后续下载，程序将断开ftp重新连接下载：" + dayDownLoadInfo.getDownloadNow() + "，任务名：" + dayDownLoadInfo.getDownName());
                         try {
@@ -203,6 +203,10 @@ public class DownLoadTask {
                     if (null != missPaths && missPaths.size() != 0) {
                         dayDownLoadInfo.setStatus(0);
                         dayDownLoadInfo.setUploadStatus(0);
+                        JobCommon.JOB_COMMON.addDayDownLoadInfo(dayDownLoadInfo);
+                    }
+                    if (checkInfo.getStatus() == -1) {
+                        dayDownLoadInfo.setStatus(3);
                         JobCommon.JOB_COMMON.addDayDownLoadInfo(dayDownLoadInfo);
                     }
                 }
