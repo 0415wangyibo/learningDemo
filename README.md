@@ -32,3 +32,5 @@ springclouddemo为service和client。
 springclouddemo2为消费者和路由。
 
 springclouddemo3为配置文件管理。
+
+springboot-amqp为amqp模拟商品秒杀功能，可整合到接口访问中，当人数超过一定阈值时直接秒杀失败
