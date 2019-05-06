@@ -67,6 +67,18 @@ CREATE TABLE sys_user_role
 )
   ENGINE = InnoDB;
 
+CREATE TABLE sys_log_info
+(
+  operation_type VARCHAR(255)                        NULL,
+  operation_name VARCHAR(255)                        NULL,
+  create_by      VARCHAR(255)                        NULL,
+  create_date    TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  method         VARCHAR(255)                        NULL,
+  result         TINYINT(1)                          NULL
+)
+  COMMENT '系统日志'
+  ENGINE = InnoDB;
+
 INSERT organization (id, organization_name, max_number) VALUES (1, '腾讯', 8);
 INSERT organization (id, organization_name, max_number) VALUES (2, '谷歌', 8);
 
