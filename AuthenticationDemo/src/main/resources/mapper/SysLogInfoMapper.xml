@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--by wangyb-->
+<mapper namespace="com.wangyb.learningdemo.authentication.mapper.SysLogInfoMapper">
+
+    <resultMap id="BaseResultMap" type="SysLogInfo">
+        <result column="operation_type" property="operationType"/>
+        <result column="operation_name" property="operationName"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="method" property="method"/>
+        <result column="result" property="result"/>
+    </resultMap>
+</mapper>

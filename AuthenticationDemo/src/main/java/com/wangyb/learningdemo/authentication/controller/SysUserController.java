@@ -1,5 +1,6 @@
 package com.wangyb.learningdemo.authentication.controller;
 
+import com.wangyb.learningdemo.authentication.annotation.SysLog;
 import com.wangyb.learningdemo.authentication.config.Constant;
 import com.wangyb.learningdemo.authentication.controller.request.*;
 import com.wangyb.learningdemo.authentication.controller.response.*;
@@ -55,7 +56,7 @@ public class SysUserController {
         return new RestResult<>(sysUserService.organizationLogin(loginReq.getLoginName(), loginReq.getPassword()));
     }
 
-
+    @SysLog(operationType = "查看", operationName = "管理员登录")
     @ApiOperation(value = "admin：用户登录，如果登录成功则返回token及相关权限信息")
     @PostMapping("admin/login")
     public RestResult<LoginVO> adminLogin(@RequestBody LoginReq loginReq) throws Exception {

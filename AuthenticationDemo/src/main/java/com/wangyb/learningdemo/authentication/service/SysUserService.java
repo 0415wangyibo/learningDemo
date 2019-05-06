@@ -102,7 +102,6 @@ public class SysUserService {
 
     @Transactional(readOnly = true)
     public LoginVO adminLogin(String loginName, String password) throws Exception {
-        System.out.println(loginName);
         SysUser sysUser = getUser(loginName);
         if (sysUser == null) {
             throw new RequestParamErrorException("用户不存在");

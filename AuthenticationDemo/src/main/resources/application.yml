@@ -34,7 +34,7 @@ logging:
     com.wangyb.learningdemo.authentication.mapper: trace
 
 server:
-  port: 8088
+  port: 8086
 
 config:
   history:
