@@ -5,7 +5,7 @@ TestDemo为webSocket后台demo
 
 springboot_elasticsearch为elasticSearch学习demo
 
-AuthenticationDemo为springboot+jwt+mybatis+shiro+ehcache+swagger+token版本控制实现权限管理的demo，其中含有比较高级的mybatis数据查询，权限管理中权限是分级的，可以按照管理员意愿给用户分配权限与角色，如果其它系统有相同的认证机制，可以实现单点登录；具有aop获取日志并记录的功能。
+AuthenticationDemo为springboot+jwt+mybatis+shiro+swagger+token+redis/ehcache版本控制实现权限管理的demo，其中含有比较高级的mybatis数据查询，权限管理中权限是分级的，可以按照管理员意愿给用户分配权限与角色，如果其它系统有相同的认证机制，可以实现单点登录；具有aop获取日志并记录的功能;使用redis作为缓存。
 
 FileUploadDemo-master为文件上传demo，其中含有按实体类生成excel表格、图片裁剪等工具类
 
