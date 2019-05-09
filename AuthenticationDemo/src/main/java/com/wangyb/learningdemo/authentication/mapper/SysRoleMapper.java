@@ -3,6 +3,7 @@ package com.wangyb.learningdemo.authentication.mapper;
 import com.wangyb.learningdemo.authentication.config.BaseMapper;
 import com.wangyb.learningdemo.authentication.controller.response.NameAndIdVO;
 import com.wangyb.learningdemo.authentication.entity.SysRole;
+import org.apache.ibatis.annotations.CacheNamespaceRef;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,6 +17,7 @@ import java.util.List;
  * Description:
  */
 @Mapper
+@CacheNamespaceRef(SysRoleMapper.class)
 public interface SysRoleMapper extends BaseMapper<SysRole>{
     /**
      * 通过用户id查询角色

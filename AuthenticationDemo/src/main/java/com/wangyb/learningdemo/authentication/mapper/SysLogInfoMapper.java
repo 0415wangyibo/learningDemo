@@ -2,6 +2,7 @@ package com.wangyb.learningdemo.authentication.mapper;
 
 import com.wangyb.learningdemo.authentication.config.BaseMapper;
 import com.wangyb.learningdemo.authentication.entity.SysLogInfo;
+import org.apache.ibatis.annotations.CacheNamespaceRef;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -11,6 +12,7 @@ import org.apache.ibatis.annotations.Mapper;
  * Description:
  */
 @Mapper
+@CacheNamespaceRef(SysLogInfoMapper.class)
 public interface SysLogInfoMapper extends BaseMapper<SysLogInfo> {
 
 }

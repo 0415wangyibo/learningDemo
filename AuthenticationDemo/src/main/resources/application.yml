@@ -12,7 +12,13 @@ spring:
         login-password: admin
       web-stat-filter:
         exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
-
+  cache:
+    redis:
+      use-key-prefix: true
+      time-to-live: 1d
+  redis:
+    host: 192.168.21.29
+    port: 6379
 mybatis:
   config-location: classpath:mybatis-config.xml
   mapper-locations: classpath:mapper/*.xml

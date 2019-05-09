@@ -3,6 +3,7 @@ package com.wangyb.learningdemo.authentication.mapper;
 import com.wangyb.learningdemo.authentication.config.BaseMapper;
 import com.wangyb.learningdemo.authentication.controller.response.SysUserVO;
 import com.wangyb.learningdemo.authentication.entity.SysUser;
+import org.apache.ibatis.annotations.CacheNamespaceRef;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,6 +19,7 @@ import java.util.List;
  * Description:
  */
 @Mapper
+@CacheNamespaceRef(SysUserMapper.class)
 public interface SysUserMapper extends BaseMapper<SysUser>{
     /**
      * 根据loginName获取用户

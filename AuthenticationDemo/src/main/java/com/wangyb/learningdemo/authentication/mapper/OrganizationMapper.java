@@ -2,6 +2,7 @@ package com.wangyb.learningdemo.authentication.mapper;
 
 import com.wangyb.learningdemo.authentication.config.BaseMapper;
 import com.wangyb.learningdemo.authentication.entity.Organization;
+import org.apache.ibatis.annotations.CacheNamespaceRef;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,6 +15,7 @@ import org.apache.ibatis.annotations.Param;
  * Description:
  */
 @Mapper
+@CacheNamespaceRef(OrganizationMapper.class)
 public interface OrganizationMapper extends BaseMapper<Organization>{
 
     /**

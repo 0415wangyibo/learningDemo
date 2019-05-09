@@ -4,17 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--by wangyb-->
 <mapper namespace="com.wangyb.learningdemo.authentication.mapper.SysRolePermissionMapper">
+    <cache type="com.wangyb.learningdemo.authentication.config.MyBatisRedisCache"/>
 
     <resultMap id="BaseResultMap" type="SysRolePermission">
         <result column="role_id" property="roleId"/>
         <result column="permission_id" property="permissionId"/>
     </resultMap>
-
-    <delete id="deleteByIds" parameterType="SysRolePermission">
-        DELETE *
-        FROM sys_role_permission
-        WHERE role_id = #{roleId, jdbcType=INTEGER}
-    </delete>
 
     <select id="selectPermissionIdsByUserId" resultType="Integer">
         SELECT rp.permission_id

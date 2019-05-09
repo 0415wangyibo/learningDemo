@@ -3,6 +3,7 @@ package com.wangyb.learningdemo.authentication.mapper;
 import com.wangyb.learningdemo.authentication.config.BaseMapper;
 import com.wangyb.learningdemo.authentication.controller.response.PermissionVO;
 import com.wangyb.learningdemo.authentication.entity.SysPermission;
+import org.apache.ibatis.annotations.CacheNamespaceRef;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
  * Description:
  */
 @Mapper
+@CacheNamespaceRef(SysPermissionMapper.class)
 public interface SysPermissionMapper extends BaseMapper<SysPermission>{
     /**
      * 根据父id列表获取子权限列表

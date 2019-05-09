@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--by wangyb-->
 <mapper namespace="com.wangyb.learningdemo.authentication.mapper.SysRoleMapper">
+    <cache type="com.wangyb.learningdemo.authentication.config.MyBatisRedisCache"/>
 
     <resultMap id="BaseResultMap" type="SysRole">
         <id column="id" property="id"/>

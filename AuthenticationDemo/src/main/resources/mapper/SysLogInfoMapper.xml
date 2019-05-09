@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--by wangyb-->
 <mapper namespace="com.wangyb.learningdemo.authentication.mapper.SysLogInfoMapper">
+    <cache type="com.wangyb.learningdemo.authentication.config.MyBatisRedisCache"/>
 
     <resultMap id="BaseResultMap" type="SysLogInfo">
         <result column="operation_type" property="operationType"/>
