@@ -65,7 +65,6 @@ public class SysUserController {
 
     @ApiOperation(value = "admin与组织：获得自己对应的权限")
     @GetMapping("permissions/user")
-    @SysLog(operationType = "查看",operationName = "查看自己的权限")
     public RestResult<List<PermissionVO>> selectPermissionVOByUseId(HttpServletRequest request) throws Exception {
         return new RestResult<>(sysUserService.selectPermissionVOByUseId((Integer) request.getAttribute(Constant.USER_ID)));
     }

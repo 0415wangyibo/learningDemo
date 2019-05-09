@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--by wangyb-->
+<mapper namespace="com.wangyb.learningdemo.authentication.mapper.SysUserRoleMapper">
+    <!--<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>-->
+
+    <resultMap id="BaseResultMap" type="SysUserRole">
+        <result column="user_id" property="userId"/>
+        <result column="role_id" property="roleId"/>
+    </resultMap>
+
+    <delete id="deleteUserRoleByOrganizationId" parameterType="com.wangyb.learningdemo.authentication.entity.SysUserRole">
+        DELETE ur.*
+        FROM sys_user_role ur, sys_user u
+        WHERE u.id = ur.user_id
+        AND u.organization_id = #{organizationId,jdbcType=INTEGER}
+    </delete>
+</mapper>

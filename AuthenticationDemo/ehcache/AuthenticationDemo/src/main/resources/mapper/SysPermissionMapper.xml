@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--by wangyb-->
 <mapper namespace="com.wangyb.learningdemo.authentication.mapper.SysPermissionMapper">
-    <cache type="com.wangyb.learningdemo.authentication.config.MyBatisRedisCache"/>
+    <!--<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>-->
 
     <resultMap id="BaseResultMap" type="SysPermission">
         <id column="id" property="id"/>
@@ -25,7 +25,7 @@
         Group By id
     </select>
 
-    <select id="selectMainPermissionByRoleId" resultType="com.wangyb.learningdemo.authentication.controller.response.PermissionVO" useCache="false">
+    <select id="selectMainPermissionByRoleId" resultType="com.wangyb.learningdemo.authentication.controller.response.PermissionVO">
         SELECT
         p.id              AS permissionId,
         p.permission_name AS permissionName

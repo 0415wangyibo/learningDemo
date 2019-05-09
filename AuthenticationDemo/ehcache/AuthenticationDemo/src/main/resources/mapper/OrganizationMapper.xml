@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--by wangyb-->
+<mapper namespace="com.wangyb.learningdemo.authentication.mapper.OrganizationMapper">
+    <!--<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>-->
+
+    <resultMap id="BaseResultMap" type="Organization">
+        <result column="id;" property="id"/>
+        <result column="organization_name" property="organizationName"/>
+        <result column="max_number" property="maxNumber"/>
+    </resultMap>
+
+    <select id="selectOrganizationById" resultType="com.wangyb.learningdemo.authentication.entity.Organization">
+        SELECT *
+        FROM organization
+        WHERE id = #{organizationId, jdbcType=INTEGER}
+    </select>
+
+    <update id="setOrganizationMaxUserNumberByOrganizationId" parameterType="com.wangyb.learningdemo.authentication.entity.Organization">
+        update organization
+        <set>
+            max_number = #{maxNumber,jdbcType=INTEGER}
+        </set>
+        where id = #{organizationId,jdbcType=INTEGER}
+    </update>
+</mapper>

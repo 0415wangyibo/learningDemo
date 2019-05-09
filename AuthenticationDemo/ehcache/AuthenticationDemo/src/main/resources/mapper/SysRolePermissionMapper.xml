@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--by wangyb-->
+<mapper namespace="com.wangyb.learningdemo.authentication.mapper.SysRolePermissionMapper">
+    <!--<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>-->
+
+    <resultMap id="BaseResultMap" type="SysRolePermission">
+        <result column="role_id" property="roleId"/>
+        <result column="permission_id" property="permissionId"/>
+    </resultMap>
+
+    <select id="selectPermissionIdsByUserId" resultType="Integer">
+        SELECT rp.permission_id
+        FROM sys_role_permission rp, sys_user_role ur
+        WHERE ur.user_id = #{userId,jdbcType=INTEGER} AND rp.role_id = ur.role_id
+        GROUP BY rp.permission_id
+    </select>
+
+    <select id="selectPermissionIdsByRoleId" resultType="Integer">
+        SELECT permission_id
+        FROM sys_role_permission
+        WHERE role_id = #{roleId,jdbcType=INTEGER}
+        GROUP BY permission_id
+    </select>
+</mapper>
