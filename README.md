@@ -25,7 +25,7 @@ ftpdemo为实时自动下载上传核查ftp文件demo，含页面，无数据库
 
 mylogdemo自定义注解，在controller层使用该注解获得日志，并将日志存储在文件或者数据库中。
 
-utildemo中有很多比较实用的工具类，方便开发实用。
+utildemo中有很多比较实用的工具类，方便开发实用，如果邮件发送，包括直接以excel附件形式发送邮件。
 
 springclouddemo为service和client。
 
