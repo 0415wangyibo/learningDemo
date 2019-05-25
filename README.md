@@ -1,5 +1,5 @@
 # learningDemo
-主要用来记录springboot及springcloud相关组件工具的学习过程
+主要用来记录springboot及springcloud相关组件工具的学习过程，以及开发过程中一些较好的实现方案demo，方便日后可以快速开发项目
 
 TestDemo为webSocket后台demo
 
