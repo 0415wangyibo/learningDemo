@@ -74,6 +74,13 @@
 			<version>3.4.0</version>
 		</dependency>
 
+		<!-- 汉语拼音相关依赖-->
+		<dependency>
+			<groupId>com.belerweb</groupId>
+			<artifactId>pinyin4j</artifactId>
+			<version>2.5.1</version>
+		</dependency>
+
 		<!--ftp相关操作依赖-->
 		<dependency>
 			<groupId>commons-net</groupId>

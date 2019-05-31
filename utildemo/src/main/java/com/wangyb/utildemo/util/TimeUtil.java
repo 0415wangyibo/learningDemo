@@ -1,6 +1,7 @@
 package com.wangyb.utildemo.util;
 
 import lombok.experimental.UtilityClass;
+import org.springframework.util.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.time.*;
@@ -183,5 +184,36 @@ public class TimeUtil {
      */
     public LocalDateTime localDateToLocalDateTime(LocalDate localDate, Integer hour, Integer minute, Integer second) {
         return LocalDateTime.of(localDate, LocalTime.of(hour, minute, second));
+    }
+
+    /**
+     * 通过生日获取年龄
+     *
+     * @param time 生日
+     * @return 年龄
+     */
+    public Integer getAgeFromLocalDateTime(String time) {
+        if (StringUtils.isEmpty(time)) {
+            return null;
+        }
+        String format = "yyyy-MM-dd HH:mm:ss";
+        DateTimeFormatter df = DateTimeFormatter.ofPattern(format);
+        LocalDateTime begin = LocalDateTime.parse(time, df);
+        LocalDateTime end = LocalDateTime.now();
+        int age = end.getYear() - begin.getYear();
+        if (end.getMonth().getValue() < begin.getMonth().getValue()) {
+            age = age - 1;
+        } else {
+            if (end.getMonth().getValue() == begin.getMonth().getValue()) {
+                if (end.getDayOfMonth() < begin.getDayOfMonth()) {
+                    age = age - 1;
+                }
+            }
+        }
+        //有生日填写不合理的，未出生，忽略
+        if (age < 1) {
+            return null;
+        }
+        return age;
     }
 }
