@@ -10,6 +10,7 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -112,6 +113,7 @@ public class NameUtil {
 
     /**
      * 将“Web开发”这种类型转化成“web kai fa”形式，方便全局搜索
+     * 也可实现将汉字转化成无音调的拼音以空格分隔功能
      * @param name
      * @return
      */
@@ -134,6 +136,33 @@ public class NameUtil {
             }
         }
         return toPinyinWithoutTone(nameBuilder.toString());
+    }
+
+
+    /**
+     * 生成拼音缩写
+     * @param pinyinName 拼音，首尾必须没空格
+     * @return
+     */
+    public String getAbbrFromPinyin(String pinyinName) {
+        if (StringUtils.isEmpty(pinyinName)) {
+            return "";
+        }else {
+            StringBuilder nameBuilder = new StringBuilder();
+            char[] nameChar = pinyinName.toCharArray();
+            for (int i=0;i<nameChar.length;i++) {
+                //首字母不是空格，直接写入
+                if (i == 0) {
+                    nameBuilder.append(String.valueOf(nameChar[i]));
+                }else {
+                    //末尾不可能是空格，不用考虑越界
+                    if (String.valueOf(nameChar[i]).equals(" ")) {
+                        nameBuilder.append(nameChar[i + 1]);
+                    }
+                }
+            }
+            return nameBuilder.toString();
+        }
     }
 
     /**
