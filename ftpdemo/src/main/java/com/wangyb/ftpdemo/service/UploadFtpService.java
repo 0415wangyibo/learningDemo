@@ -27,7 +27,11 @@ import java.util.List;
 @Slf4j
 public class UploadFtpService {
 
-    private FTPClient ftpClient;
+
+    /**
+     * 定义线程私有成员变量，防止多个线程同时修改私有成员变量时出现异常
+     */
+    private ThreadLocal<FTPClient> ftpClientThreadLocal = new ThreadLocal<>();
 
     /**
      * 连接 ftp 服务器，登录，设置被动模式
@@ -41,7 +45,7 @@ public class UploadFtpService {
      */
     public FTPClient open(String host, Integer port, String user, String password) throws IOException {
         log.debug("开始连接登录ftp服务器");
-        ftpClient = new FTPClient();
+        FTPClient ftpClient = new FTPClient();
         ftpClient.connect(host, port);
         //打印命令
 //        ftpClient.addProtocolCommandListener(new PrintCommandListener(System.out));
@@ -61,6 +65,7 @@ public class UploadFtpService {
         ftpClient.enterLocalPassiveMode();
         //每隔半分钟发送一次心跳，向路由器表明网络正在使用，防止路由器切断网络
         ftpClient.setControlKeepAliveTimeout(30);
+        ftpClientThreadLocal.set(ftpClient);
         return ftpClient;
     }
 
@@ -70,6 +75,7 @@ public class UploadFtpService {
      * @throws IOException
      */
     public void close() throws IOException {
+        FTPClient ftpClient = ftpClientThreadLocal.get();
         if (ftpClient != null) {
             ftpClient.logout();
             ftpClient.disconnect();
@@ -84,6 +90,7 @@ public class UploadFtpService {
      * @throws IOException
      */
     public void uploadFile(String source, String destination) throws IOException {
+        FTPClient ftpClient = ftpClientThreadLocal.get();
         ftpClient.enterLocalPassiveMode();
         try (InputStream is = new FileInputStream(source)) {
             ftpClient.storeFile(destination, is);
@@ -100,6 +107,7 @@ public class UploadFtpService {
      * @throws IOException
      */
     public void uploadStatusFile(String source, String destinationPath, String fileName) throws IOException {
+        FTPClient ftpClient = ftpClientThreadLocal.get();
         changeAndMakeFtpDirectory(destinationPath);
         ftpClient.enterLocalPassiveMode();
         try (InputStream is = new FileInputStream(source)) {
@@ -118,6 +126,7 @@ public class UploadFtpService {
      * @throws IOException
      */
     public void uploadDirectory(String sourcePath, String destinationPath, DayDownLoadInfo dayDownLoadInfo, Integer sameUpload) throws IOException,NullPointerException {
+        FTPClient ftpClient = ftpClientThreadLocal.get();
         changeAndMakeFtpDirectory(destinationPath);
         File[] files = new File(sourcePath).listFiles();
         log.debug(sourcePath);
@@ -165,6 +174,7 @@ public class UploadFtpService {
      * @throws IOException
      */
     private void changeAndMakeFtpDirectory(String destinationPath) throws IOException {
+        FTPClient ftpClient = ftpClientThreadLocal.get();
         String currentPath = ftpClient.printWorkingDirectory();
         String[] oldPaths = currentPath.split("/");
         if (oldPaths.length > 1) {
@@ -220,6 +230,7 @@ public class UploadFtpService {
      * @return
      */
     public Long checkFileSize(String fileName) throws IOException {
+        FTPClient ftpClient = ftpClientThreadLocal.get();
         FTPFile[] ftpFiles = ftpClient.listFiles();
         if (null != ftpFiles && ftpFiles.length > 0) {
             for (FTPFile ftpFile : ftpFiles) {

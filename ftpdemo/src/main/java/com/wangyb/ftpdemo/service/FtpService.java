@@ -28,7 +28,10 @@ import java.util.List;
 @Slf4j
 public class FtpService {
 
-    private FTPClient ftpClient;
+    /**
+     * 定义线程私有成员变量，防止多个线程同时修改私有成员变量时出现异常
+     */
+    private ThreadLocal<FTPClient> ftpClientThreadLocal = new ThreadLocal<>();
 
     /**
      * 连接 ftp 服务器，登录，设置被动模式
@@ -38,7 +41,7 @@ public class FtpService {
      */
     public FTPClient open() throws IOException {
         log.debug("开始连接登录ftp服务器");
-        ftpClient = new FTPClient();
+        FTPClient ftpClient = new FTPClient();
         ftpClient.connect(DownloadCommon.DOWNLOAD_COMMON.getFtpHost(), DownloadCommon.DOWNLOAD_COMMON.getFtpPort());
         //打印命令
 //        ftpClient.addProtocolCommandListener(new PrintCommandListener(System.out));
@@ -57,6 +60,7 @@ public class FtpService {
         ftpClient.enterLocalPassiveMode();
         //每隔半分钟发送一次心跳，向路由器表明网络正在使用，防止路由器切断网络
         ftpClient.setControlKeepAliveTimeout(30);
+        ftpClientThreadLocal.set(ftpClient);
         return ftpClient;
     }
 
@@ -87,6 +91,8 @@ public class FtpService {
         dayDownLoadInfo.setDownloadNow(destination);
         dayDownLoadInfo.setDownloadNowSize(fileSize);
         JobCommon.JOB_COMMON.addDayDownLoadInfo(dayDownLoadInfo);
+        FTPClient ftpClient = ftpClientThreadLocal.get();
+        ftpClient.changeWorkingDirectory(sourcePath);
         //告诉ftp服务器开通一个端口传输数据
         ftpClient.enterLocalPassiveMode();
         try (FileOutputStream out = new FileOutputStream(destination)) {
@@ -98,7 +104,6 @@ public class FtpService {
             if (fileSize > 1024 * 1204 * 2) {
                 this.close();
                 this.open();
-                ftpClient.changeWorkingDirectory(sourcePath);
             }
         }
     }
@@ -113,6 +118,7 @@ public class FtpService {
      * @throws IOException
      */
     public void downloadDirectory(String sourcePath, String destinationPath, DayDownLoadInfo dayDownLoadInfo, Integer sameDownload) throws IOException, NullPointerException {
+        FTPClient ftpClient = ftpClientThreadLocal.get();
         ftpClient.changeWorkingDirectory(sourcePath);
         FTPFile[] ftpFiles = ftpClient.listFiles();
         if (null == ftpFiles || ftpFiles.length < 1) {
@@ -152,6 +158,7 @@ public class FtpService {
      * @throws IOException
      */
     public void deleteAllFile(String pathname) throws IOException {
+        FTPClient ftpClient = ftpClientThreadLocal.get();
         ftpClient.changeWorkingDirectory(pathname);
         FTPFile[] files = ftpClient.listFiles();
         for (FTPFile f : files) {
@@ -177,6 +184,7 @@ public class FtpService {
      * @throws IOException
      */
     public List<String> listFiles(String pathname) throws IOException {
+        FTPClient ftpClient = ftpClientThreadLocal.get();
         FTPFile[] files = ftpClient.listFiles(pathname);
         List<String> list = new ArrayList<>();
         for (FTPFile f : files) {
@@ -193,6 +201,7 @@ public class FtpService {
      * @throws IOException
      */
     public void close() throws IOException {
+        FTPClient ftpClient = ftpClientThreadLocal.get();
         if (ftpClient != null) {
             log.info("ftp主机：" + ftpClient.getPassiveHost());
             //终止传输
@@ -213,6 +222,7 @@ public class FtpService {
      * @throws IOException
      */
     public Boolean isConnected() throws IOException {
+        FTPClient ftpClient = ftpClientThreadLocal.get();
         Boolean connected = false;
         if (ftpClient != null) {
             connected = ftpClient.sendNoOp();
@@ -229,6 +239,7 @@ public class FtpService {
      * @throws IOException
      */
     public Boolean testChangeWorkingDirectory(String pathname) throws IOException {
+        FTPClient ftpClient = ftpClientThreadLocal.get();
         if (ftpClient.changeWorkingDirectory(pathname)) {
             ftpClient.changeWorkingDirectory("/");
             return true;
@@ -244,6 +255,7 @@ public class FtpService {
      * @throws IOException
      */
     public Long getFileSize(String pathname) throws IOException {
+        FTPClient ftpClient = ftpClientThreadLocal.get();
         ftpClient.changeWorkingDirectory(pathname);
         Long size = 0L;
         FTPFile[] files = ftpClient.listFiles(pathname);
@@ -271,6 +283,7 @@ public class FtpService {
      * @throws IOException
      */
     public Integer getFileNumber(String pathname) throws IOException {
+        FTPClient ftpClient = ftpClientThreadLocal.get();
         ftpClient.changeWorkingDirectory(pathname);
         Integer size = 0;
         FTPFile[] files = ftpClient.listFiles(pathname);
@@ -299,6 +312,7 @@ public class FtpService {
      * @throws IOException
      */
     public void checkDownLoadFile(String sourcePath, String destinationPath, DayDownLoadInfo dayDownLoadInfo) throws IOException {
+        FTPClient ftpClient = ftpClientThreadLocal.get();
         ftpClient.changeWorkingDirectory(sourcePath);
         FTPFile[] files = ftpClient.listFiles(sourcePath);
         for (FTPFile ftpFile : files) {
@@ -337,6 +351,7 @@ public class FtpService {
      * @throws IOException
      */
     public void statisticDownloadFile(String sourcePath, String destinationPath) throws IOException {
+        FTPClient ftpClient = ftpClientThreadLocal.get();
         ftpClient.changeWorkingDirectory(sourcePath);
         FTPFile[] files = ftpClient.listFiles(sourcePath);
         for (FTPFile ftpFile : files) {
