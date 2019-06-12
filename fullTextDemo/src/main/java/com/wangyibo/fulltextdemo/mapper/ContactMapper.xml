@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangyibo.fulltextdemo.mapper.ContactMapper">
+
+    <resultMap id="BaseResultMap" type="com.wangyibo.fulltextdemo.entity.Contact">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="name" property="name"/>
+        <result column="sex" property="sex"/>
+        <result column="contact" property="contact"/>
+        <result column="ch_position" property="chPosition"/>
+        <result column="position" property="position"/>
+        <result column="position_abbr" property="positionAbbr"/>
+        <result column="last_name" property="lastName"/>
+        <result column="first_name" property="firstName"/>
+        <result column="abbr_name" property="abbrName"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, create_time, update_time, `name`, sex, contact, ch_position, position, position_abbr, last_name, first_name, abbr_name
+    </sql>
+
+
+    <select id="selectContactsByContact" resultType="com.wangyibo.fulltextdemo.entity.Contact"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM contact
+        WHERE contact = #{contact}
+    </select>
+
+    <select id="selectContactsByCondition" resultType="com.wangyibo.fulltextdemo.entity.Contact"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>,relevance
+        FROM (SELECT
+        <include refid="Base_Column_List"/>,
+        (MATCH(last_name) AGAINST(#{lastName} IN NATURAL LANGUAGE MODE) +
+        MATCH(first_name) AGAINST(#{firstName} IN NATURAL LANGUAGE MODE) +
+        MATCH(abbr_name) AGAINST(#{abbrName} IN NATURAL LANGUAGE MODE) +
+        MATCH(last_name, first_name) AGAINST(#{fullName} IN NATURAL LANGUAGE MODE) +
+        MATCH(first_name) AGAINST(#{fullName} IN NATURAL LANGUAGE MODE)+
+        MATCH(last_name) AGAINST(#{toneLastName} IN NATURAL LANGUAGE MODE)+
+        MATCH(first_name) AGAINST(#{toneFirstName} IN NATURAL LANGUAGE MODE)+
+        MATCH(last_name, first_name) AGAINST(#{toneFullName} IN NATURAL LANGUAGE MODE)+
+        MATCH(first_name) AGAINST(#{toneFullName} IN NATURAL LANGUAGE MODE)) AS relevance
+        FROM contact
+        ORDER BY relevance DESC
+        LIMIT 20) AS tmp
+    </select>
+
+    <select id="selectContactsByPosition" resultType="com.wangyibo.fulltextdemo.entity.Contact"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>,relevance
+        FROM (SELECT
+        <include refid="Base_Column_List"/>,
+        (MATCH(last_name) AGAINST(#{lastName} IN NATURAL LANGUAGE MODE) +
+        MATCH(position) AGAINST(#{position} IN NATURAL LANGUAGE MODE) +
+        MATCH(position) AGAINST(#{fullPosition} IN NATURAL LANGUAGE MODE) +
+        MATCH(position_abbr) AGAINST(#{positionAbbr} IN NATURAL LANGUAGE MODE) +
+        MATCH(last_name, position) AGAINST(#{fullPosition} IN NATURAL LANGUAGE MODE)+
+        MATCH(last_name) AGAINST(#{toneLastName} IN NATURAL LANGUAGE MODE) +
+        MATCH(position) AGAINST(#{toneNewPositionPinyin} IN NATURAL LANGUAGE MODE) +
+        MATCH(position) AGAINST(#{toneFullPosition} IN NATURAL LANGUAGE MODE) +
+        MATCH(last_name, position) AGAINST(#{toneFullPosition} IN NATURAL LANGUAGE MODE)) AS relevance
+        FROM contact
+        ORDER BY relevance DESC
+        LIMIT 20) AS tmp
+    </select>
+</mapper>

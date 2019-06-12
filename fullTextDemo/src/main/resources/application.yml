@@ -1,0 +1,29 @@
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.21.29:3306/full_text?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root@123
+    druid:
+      stat-view-servlet:
+        login-username: admin
+        login-password: admin
+      web-stat-filter:
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+
+mybatis:
+  config-location: classpath:mybatis-config.xml
+
+mapper:
+  mappers:
+    - com.wangyibo.fulltextdemo.config.BaseMapper
+  identity: MYSQL
+  not-empty: false
+
+logging:
+  level:
+    com.wangyibo.fulltextdemo.mapper: debug
+
+server:
+  port: 8069
