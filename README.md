@@ -33,4 +33,6 @@ springclouddemo2为消费者和路由。
 
 springclouddemo3为配置文件管理。
 
-springboot-amqp为amqp模拟商品秒杀功能，可整合到接口访问中，当人数超过一定阈值时直接秒杀失败
+springboot-amqp为amqp模拟商品秒杀功能，可整合到接口访问中，当人数超过一定阈值时直接秒杀失败。
+
+fullTextDemo是基于mysql5.6.4以上版本所拥有的全文索引而实现的通讯录智能搜索，可以按自然语言模糊匹配，搜索结果可能比elasticSearch更智能。
