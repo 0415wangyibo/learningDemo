@@ -69,10 +69,10 @@ public class ContactService {
                 for (int j = 0; j < contactsSize - 1 - i; j++) {
                     Contact contactOne = contactsList.get(j);
                     Contact contactTwo = contactsList.get(j + 1);
-                    //如果两个权值相差小于0.5，则进行排序
-                    if (Math.abs(contactOne.getRelevance() - contactTwo.getRelevance()) < 0.5) {
-                        //让长度相差较小的排在前面
-                        if (Math.abs(contactOne.getName().length() - length) > Math.abs(contactTwo.getName().length() - length)) {
+                    //如果两个权值相差小于0.1，则进行排序
+                    if (Math.abs(contactOne.getRelevance() - contactTwo.getRelevance()) < 0.1) {
+                        //让笔画相差较小的排在前面
+                        if (Math.abs(NameUtil.getStrokeCount(contactOne.getName()) - length) > Math.abs(NameUtil.getStrokeCount(contactTwo.getName()) - length)) {
                             contactsList.set(j, contactTwo);
                             contactsList.set(j + 1, contactOne);
                             //如果一轮中有元素改动，则下一轮继续比较排序，否则说明已经排好序
@@ -147,9 +147,10 @@ public class ContactService {
         String toneFullName = NameUtil.nameToPinyinWithToneSplitWhiteSpace(name);
         //获得姓名拼音缩写
         String abbrName = NameUtil.getAbbrFromPinyin(fullName);
-        return this.selectContactsByName(lastName, firstName, abbrName + abbrName, fullName,
+        List<Contact> contactList= this.selectContactsByName(lastName, firstName, abbrName + abbrName, fullName,
                 toneLastName,toneFirstName,toneFullName);
-//        return this.changeSortByLength(contactsList, name.length());
+        //根据笔画数进行排序，做到对同音不同名的名字进行区别，如：李媛、李元返回的结果顺序是不同的
+        return this.changeSortByLength(contactList, NameUtil.getStrokeCount(name));
     }
 
     public List<Contact> smartSelectContactsByPosition(String position) {

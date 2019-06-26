@@ -15,7 +15,7 @@ import java.util.Date;
  * @author wangyb
  * @Date 2019/6/11 16:15
  * Modified By:
- * Description:
+ * Description: firstName中可以加上名的全音及带音调的全音，可以增加匹配的精确度，如：yibo yi4bo1，搜索时传入yibo yi4bo1，待处理
  */
 @Data
 @AllArgsConstructor

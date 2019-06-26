@@ -12,6 +12,7 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 import org.springframework.util.StringUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -247,5 +248,59 @@ public class NameUtil {
         } else {
             return name;
         }
+    }
+
+    public int getStrokeCount(char character) {
+        try {
+            byte[] bytes = (String.valueOf(character)).getBytes("gbk");
+            if (bytes.length > 2 || bytes.length <= 0) {
+                // 错误引用,非合法字符
+                return 0;
+            }
+            if (bytes.length == 1) {
+                // 英文字符
+                return 0;
+            }
+            // 中文字符
+            int highByte = 256 + bytes[0];
+            int lowByte = 256 + bytes[1];
+            return getGB2312StrokeCountM(highByte, lowByte);
+        } catch (UnsupportedEncodingException e) {
+            return 0;
+        }
+    }
+
+    /**
+     * 获取字符串中所有汉字的笔画总和
+     */
+    public int getStrokeCount(String words) {
+        //去除非中文
+        char[] wordsChar = words.toCharArray();
+        int count = 0;
+        for (int i = 0; i < wordsChar.length; i++) {
+            int returnCount = getStrokeCount(wordsChar[i]);
+            if (returnCount > 0) {
+                count += returnCount;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 通过编码计算得到该汉字的偏移量,通过偏移量再在上面的笔画列表中
+     * 得到该汉字的笔画数.
+     *
+     * @param c1
+     * @param c2
+     * @return
+     */
+    private static int getGB2312StrokeCountM(int c1, int c2) {
+        int OffSet;
+        if (c1 < 0xB0 || c1 > 0xF7 || c2 < 0xA1 || c2 > 0xFE) {
+            // 不是一个有效的GB2312汉字字符
+            return -1;
+        }
+        OffSet = (c1 - 0xB0) * (0xFE - 0xA0) + (c2 - 0xA1);
+        return SurnameConfig.gb2312_stroke_count[OffSet];
     }
 }
