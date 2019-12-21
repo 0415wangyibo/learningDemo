@@ -13,7 +13,7 @@
         <Prudent>true</Prudent>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>
-                E:/myLog/log/%d{yyyy-MM-dd}.log
+                D:/myLog/log/%d{yyyy-MM-dd}.log
             </FileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
